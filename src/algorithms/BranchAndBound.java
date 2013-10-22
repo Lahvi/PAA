@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Stack;
 
 import model.Knapsack;
+import model.KnapsackConfiguration;
 import model.KnapsackItem;
 
 public class BranchAndBound {
 	private Knapsack problemInstance;
 	private int capacity;
-	private int bestPrice;
-	private List<KnapsackItem> bestConfig;
+	private KnapsackConfiguration bestConfig;
 	
 	public BranchAndBound(Knapsack intance){
 		this.problemInstance = intance;
@@ -27,23 +27,23 @@ public class BranchAndBound {
 		}
 	}
 	
-	private void solve(KnapsackItem item, List<KnapsackItem> items, List<KnapsackItem> results){
-		if(getItemsPrice(items) + getItemsPrice(results) <= bestPrice){
+	private void solve(KnapsackItem item, List<KnapsackItem> items, KnapsackConfiguration config){
+		if(getItemsPrice(items) + getItemsPrice(config) <= bestPrice){
 			return;
 		}
-		if(getItemsWeight(results) + item.getWeight() > capacity){
+		if(getItemsWeight(config) + item.getWeight() > capacity){
 			return;
 		}
-		results.add(item);
-		int price = getItemsPrice(results);
+		config.add(item);
+		int price = getItemsPrice(config);
 		if(price > bestPrice){
 			bestPrice = price;
-			bestConfig = results;
+			bestConfig = config;
 		}
 		for (int i = 1; i < items.size(); i++){
 			List<KnapsackItem> newItems = new ArrayList<KnapsackItem>(items);
 			KnapsackItem newItem = newItems.remove(i);
-			solve(newItem, newItems, new ArrayList<KnapsackItem>(results));
+			solve(newItem, newItems, new ArrayList<KnapsackItem>(config));
 		}
 		
 	}
@@ -62,6 +62,10 @@ public class BranchAndBound {
 			weight += item.getWeight();
 		}
 		return weight;
+	}
+	
+	public void getBestConfiguration(){
+		
 	}
 	
 	

@@ -9,12 +9,23 @@ public class KnapsackConfiguration {
 	
 	private int capacity;
 	private List<KnapsackItem> items;
+	private List<KnapsackItem> availableItems;
 	
-	public KnapsackConfiguration(int capacity){
+	public KnapsackConfiguration(int capacity, List<KnapsackItem> availableItems){
 		this.capacity = capacity;
 		this.items = new ArrayList<KnapsackItem>();
+		this.availableItems = new ArrayList<KnapsackItem>(availableItems);
 		currentPrice = 0;
 		currentWeight = 0;
+	}
+	
+	private KnapsackConfiguration(KnapsackConfiguration origin){
+		this.capacity = origin.capacity;
+		this.currentPrice = origin.currentPrice;
+		this.currentWeight = origin.currentWeight;
+		
+		this.items = new ArrayList<KnapsackItem>(origin.items);
+		this.availableItems = new ArrayList<KnapsackItem>(origin.availableItems);
 	}
 	
 	public boolean isPosibleAddItem(KnapsackItem item){
@@ -44,5 +55,9 @@ public class KnapsackConfiguration {
 
 	public List<KnapsackItem> getItems() {
 		return items;
+	}
+	
+	public KnapsackConfiguration getClone(){
+		
 	}
 }
