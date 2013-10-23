@@ -19,15 +19,13 @@ public class BranchAndBound {
 	}
 	
 	public void exectue(){
-		List<KnapsackItem> items = new ArrayList<KnapsackItem>(problemInstance.getItems());
-		for (int i = 0; i < items.size(); i++){
-			List<KnapsackItem> newItems = new ArrayList<KnapsackItem>(items);
-			KnapsackItem newItem = newItems.remove(i);
-			solve(newItem, newItems, new ArrayList<KnapsackItem>());
-		}
+		KnapsackConfiguration startConfig = new KnapsackConfiguration(capacity, problemInstance.getItems());
+                while(startConfig.hasAvailableItems()){
+                    solve(startConfig.getNextAvailableItem(), startConfig.);
+                }
 	}
 	
-	private void solve(KnapsackItem item, List<KnapsackItem> items, KnapsackConfiguration config){
+	private void solve(KnapsackItem item, KnapsackConfiguration config){
 		if(getItemsPrice(items) + getItemsPrice(config) <= bestPrice){
 			return;
 		}

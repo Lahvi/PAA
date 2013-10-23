@@ -31,6 +31,34 @@ public class KnapsackItem {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.id;
+        hash = 71 * hash + this.weight;
+        hash = 71 * hash + this.price;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final KnapsackItem other = (KnapsackItem) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.weight != other.weight) {
+            return false;
+        }
+        if (this.price != other.price) {
+            return false;
+        }
+        return true;
+    }
 }
